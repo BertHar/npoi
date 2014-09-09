@@ -479,6 +479,20 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             return tbl;
         }
+        public CT_Tbl ParagraphToTable(CT_P paragraph)
+        {
+            CT_Tbl tbl = new CT_Tbl();
+            lock (this)
+            {
+                int pos = this.itemsField.IndexOf(paragraph);
+                if (pos > 0)
+                {
+                    this.itemsField.Insert(pos, tbl);
+                    this.itemsElementNameField.Insert(pos, DocumentBodyItemChoiceType.tbl);
+                }
+            }
+            return tbl;
+        }
         public int sizeOfTblArray()
         {
             return SizeOfArray(DocumentBodyItemChoiceType.tbl);

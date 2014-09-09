@@ -1200,6 +1200,16 @@ namespace NPOI.XWPF.UserModel
             tables.Insert(i, table);
         }
 
+        public XWPFTable ConvertParagraphToTable(XWPFParagraph p, int rows, int cols)
+        {
+            int docpos = bodyElements.IndexOf(p);
+            XWPFTable table = new XWPFTable(ctDocument.body.ParagraphToTable(p.GetCTP()), this, rows, cols);
+            RemoveBodyElement(docpos);
+            bodyElements.Insert(docpos, table);
+            tables.Add(table);
+            return table;
+        }
+
         /**
          * Returns all Pictures, which are referenced from the document itself.
          * @return a {@link List} of {@link XWPFPictureData}. The returned {@link List} is unmodifiable. Use #a
